@@ -107,12 +107,35 @@ public class TestBook {
 		assertEquals(mockLoan, null);
 	}
 	
-/*
-	@Test
-	public void testReturnBook() {
-		fail("Not yet implemented");
-	}
 
+	@Test
+	public void testReturnBookDamaged() {
+		ILoan loan =mock(ILoan.class);
+		
+		this.book.borrow(loan);
+		assertEquals(this.book.getState(), EBookState.ON_LOAN);
+		
+		this.book.returnBook(true);
+		assertEquals(this.book.getState(), EBookState.DAMAGED);
+	}
+	
+	@Test
+	public void testReturnBookNotDamaged() {
+		ILoan loan =mock(ILoan.class);
+		
+		this.book.borrow(loan);
+		assertEquals(this.book.getState(), EBookState.ON_LOAN);
+		
+		this.book.returnBook(false);
+		assertEquals(this.book.getState(), EBookState.AVAILABLE);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testReturnBookNotOnLoan() {		
+		this.book.returnBook(true);
+	}
+	
+/*
 	@Test
 	public void testLose() {
 		fail("Not yet implemented");
