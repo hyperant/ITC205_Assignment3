@@ -99,9 +99,7 @@ public class TestLoan {
 		verify(this.member).addLoan(this.loan);
 		
 		assertTrue(this.loan.isCurrent());
-		
-		int actualLoanID =this.loan.getID();
-		assertEquals(id, actualLoanID);
+		assertEquals(id, this.loan.getID());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -211,11 +209,18 @@ public class TestLoan {
 		assertNotEquals(mock(IBook.class), this.loan.getBook());
 	}
 	
-/*
- * 
 	@Test
 	public void testGetID() {
-		fail("Not yet implemented");
+		int id =1;
+		this.loan.commit(id);
+		
+		assertEquals(id, this.loan.getID());
 	}
-*/
+	
+	@Test
+	public void testGetIDDoNotMatch() {
+		this.loan.commit(1);
+		
+		assertNotEquals(4, this.loan.getID());
+	}
 }
