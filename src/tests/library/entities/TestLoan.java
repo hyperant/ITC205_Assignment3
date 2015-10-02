@@ -201,12 +201,18 @@ public class TestLoan {
 		assertNotEquals(mock(IMember.class), this.loan.getBorrower());
 	}
 	
-/*
 	@Test
 	public void testGetBook() {
-		fail("Not yet implemented");
+		assertEquals(this.book, this.loan.getBook());
 	}
-
+	
+	@Test
+	public void testGetBookDoNotMatch() {
+		assertNotEquals(mock(IBook.class), this.loan.getBook());
+	}
+	
+/*
+ * 
 	@Test
 	public void testGetID() {
 		fail("Not yet implemented");
