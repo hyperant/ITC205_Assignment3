@@ -88,12 +88,26 @@ public class TestBook {
 		this.book.borrow(loan);
 	}
 	
-/*
+
 	@Test
 	public void testGetLoan() {
-		fail("Not yet implemented");
+		ILoan loan =mock(ILoan.class);
+		
+		this.book.borrow(loan);
+		assertEquals(this.book.getState(), EBookState.ON_LOAN);
+		
+		ILoan mockLoan =this.book.getLoan();
+		
+		assertEquals(loan, mockLoan);
 	}
-
+	
+	@Test
+	public void testGetLoanBookNotOnLoan() {		
+		ILoan mockLoan =this.book.getLoan();
+		assertEquals(mockLoan, null);
+	}
+	
+/*
 	@Test
 	public void testReturnBook() {
 		fail("Not yet implemented");

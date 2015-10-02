@@ -39,6 +39,7 @@ public class Book implements IBook  {
 
 	@Override
 	public void borrow(ILoan loan) {
+		//Even though this is not in the specification I think that we should do a check for it just in case.
 		if(loan ==null) {
 			throw new IllegalArgumentException("Bad parameter: loan can not be null");
 		}
@@ -53,8 +54,11 @@ public class Book implements IBook  {
 
 	@Override
 	public ILoan getLoan() {
-		// TODO Auto-generated method stub
-		return null;
+		if(this.bookState !=EBookState.ON_LOAN) {
+			return null;
+		}
+		
+		return this.loan;
 	}
 
 	@Override
