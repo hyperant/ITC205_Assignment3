@@ -11,6 +11,10 @@ public class Book implements IBook  {
 	
 	private int bookID;
 	
+	private ILoan loan;
+	
+	private EBookState bookState;
+	
 	public Book(String author, String title, String callNumber, int bookID) {
 		if(bookID <1) {
 			throw new IllegalArgumentException("bookID can not be less then 1: " +bookID);
@@ -28,12 +32,23 @@ public class Book implements IBook  {
 		this.title =title;
 		this.callNumber =callNumber;
 		this.bookID =bookID;
+		
+		this.loan =null;
+		this.bookState =EBookState.AVAILABLE;
 	}
 
 	@Override
 	public void borrow(ILoan loan) {
-		// TODO Auto-generated method stub
+		if(loan ==null) {
+			throw new IllegalArgumentException("Bad parameter: loan can not be null");
+		}
 		
+		if(this.bookState !=EBookState.AVAILABLE) {
+			throw new RuntimeException("Book is not currently available: " +this.bookState);
+		}
+		
+		this.loan =loan;
+		this.bookState =EBookState.ON_LOAN;
 	}
 
 	@Override
@@ -68,8 +83,7 @@ public class Book implements IBook  {
 
 	@Override
 	public EBookState getState() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.bookState;
 	}
 
 	@Override

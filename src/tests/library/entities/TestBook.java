@@ -1,8 +1,11 @@
 package tests.library.entities;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import library.entities.Book;
+import library.interfaces.entities.EBookState;
 import library.interfaces.entities.IBook;
+import library.interfaces.entities.ILoan;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,6 +16,8 @@ public class TestBook {
 	private String title;
 	private String callNumber;
 	private int bookID;
+	
+	private IBook book;
 
 	@Before
 	public void setUp() throws Exception {
@@ -20,10 +25,13 @@ public class TestBook {
 		this.title ="Programming 101";
 		this.callNumber ="PRO 101";
 		this.bookID =1;
+		
+		this.book =new Book(this.author, this.title, this.callNumber, this.bookID);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		this.book =null;
 	}
 
 	@Test
@@ -56,12 +64,31 @@ public class TestBook {
 		assertTrue(book instanceof IBook);
 	}
 	
-	/*
+	
 	@Test
 	public void testBorrow() {
-		fail("Not yet implemented");
+		ILoan loan =mock(ILoan.class);
+		
+		this.book.borrow(loan);
+		assertEquals(this.book.getState(), EBookState.ON_LOAN);
 	}
-
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testBorrowBadParamLoan() {
+		this.book.borrow(null);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testBorrowAllreadyOnLoan() {
+		ILoan loan =mock(ILoan.class);
+		
+		this.book.borrow(loan);
+		assertEquals(this.book.getState(), EBookState.ON_LOAN);
+		
+		this.book.borrow(loan);
+	}
+	
+/*
 	@Test
 	public void testGetLoan() {
 		fail("Not yet implemented");
