@@ -5,6 +5,30 @@ import library.interfaces.entities.IBook;
 import library.interfaces.entities.ILoan;
 
 public class Book implements IBook  {
+	private String author;
+	private String title;
+	private String callNumber;
+	
+	private int bookID;
+	
+	public Book(String author, String title, String callNumber, int bookID) {
+		if(bookID <1) {
+			throw new IllegalArgumentException("bookID can not be less then 1: " +bookID);
+		}
+		
+		if(author ==null || title ==null || callNumber ==null) {
+			throw new IllegalArgumentException("Bad parameter: null value detected");
+		}
+		
+		if(author.isEmpty() || title.isEmpty() || callNumber.isEmpty()) {
+			throw new IllegalArgumentException("Bad parameter: Empty string detected");
+		}
+		
+		this.author =author;
+		this.title =title;
+		this.callNumber =callNumber;
+		this.bookID =bookID;
+	}
 
 	@Override
 	public void borrow(ILoan loan) {
