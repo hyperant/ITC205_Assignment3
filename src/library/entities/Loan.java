@@ -1,11 +1,11 @@
 package library.entities;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import library.interfaces.entities.IBook;
 import library.interfaces.entities.ILoan;
 import library.interfaces.entities.IMember;
-
 import library.interfaces.entities.ELoanState;
 
 public class Loan implements ILoan {
@@ -64,8 +64,7 @@ public class Loan implements ILoan {
 
 	@Override
 	public boolean isOverDue() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.loanState ==ELoanState.OVERDUE;
 	}
 
 	@Override
@@ -75,8 +74,15 @@ public class Loan implements ILoan {
 
 	@Override
 	public boolean checkOverDue(Date currentDate) {
-		// TODO Auto-generated method stub
-		return false;
+		if(this.loanState ==ELoanState.COMPLETE || this.loanState ==ELoanState.PENDING) {
+			throw new RuntimeException("Current loan state is not current or overdue: " +this.loanState);
+		}
+		
+		if(currentDate.compareTo(this.dueDate) >0) {
+			this.loanState =ELoanState.OVERDUE;
+		}
+		
+		return this.loanState ==ELoanState.OVERDUE;
 	}
 
 	@Override

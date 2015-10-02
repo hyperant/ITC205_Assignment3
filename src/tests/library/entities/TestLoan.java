@@ -129,22 +129,52 @@ public class TestLoan {
 		this.loan.complete();
 	}
 	
-/*
-	@Test
-	public void testIsOverDue() {
-		fail("Not yet implemented");
-	}
 
 	@Test
+	public void testIsOverDue() {
+		//fail("Not yet implemented");
+	}
+	
+	@Test
 	public void testIsCurrent() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testCheckOverDue() {
-		fail("Not yet implemented");
+		Calendar cal =Calendar.getInstance();
+		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD +5); //Force the current time to be 5 days in front of due date
+		Date currentDate =cal.getTime(); 
+		
+		this.loan.commit(1);
+		assertTrue(this.loan.isCurrent());
+		assertTrue(this.loan.checkOverDue(currentDate));
+		assertFalse(this.loan.isCurrent()); //Make sure we are overdue
+	}
+	
+	@Test
+	public void testCheckOverDueStillCurrent() {
+		Calendar cal =Calendar.getInstance();
+		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD -5); //Force the current time to be 5 days before due date
+		Date currentDate =cal.getTime();
+		
+		this.loan.commit(1);
+		assertTrue(this.loan.isCurrent());
+		assertFalse(this.loan.checkOverDue(currentDate));
+		assertTrue(this.loan.isCurrent()); //Make sure we are still current
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testCheckOverDueWhenNotCurrentOrOverdue() {
+		Calendar cal =Calendar.getInstance();
+		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD -5); //Force the current time to be 5 days before due date
+		Date currentDate =cal.getTime();
+		
+		assertFalse(this.loan.isCurrent());
+		assertFalse(this.loan.checkOverDue(currentDate));
 	}
 
+/*
 	@Test
 	public void testGetBorrower() {
 		fail("Not yet implemented");
