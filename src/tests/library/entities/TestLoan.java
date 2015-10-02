@@ -20,6 +20,7 @@ import org.junit.Test;
 public class TestLoan {
 	private IBook book;
 	private IMember member;
+	private ILoan loan;
 	
 	private Date borrowDate;
 	private Date dueDate;
@@ -35,10 +36,13 @@ public class TestLoan {
 		this.borrowDate =this.cal.getTime();
 		this.cal.add(Calendar.DATE, ILoan.LOAN_PERIOD);
 		this.dueDate =this.cal.getTime();
+		
+		this.loan =new Loan(this.book, this.member, this.borrowDate, this.dueDate);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		this.loan =null;
 	}
 
 	@Test
@@ -80,12 +84,38 @@ public class TestLoan {
 		assertTrue(loan instanceof Loan);
 	}
 	
-	/*
+	@Test
+	public void testIsCurrentPending() {
+		assertFalse(this.loan.isCurrent());
+	}
+	
 	@Test
 	public void testCommit() {
-		fail("Not yet implemented");
+		int id =1;
+		
+		this.loan.commit(id);
+		
+		verify(this.book).borrow(this.loan);
+		verify(this.member).addLoan(this.loan);
+		
+		assertTrue(this.loan.isCurrent());
+		
+		int actualLoanID =this.loan.getID();
+		assertEquals(id, actualLoanID);
 	}
-
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testCommitBadParamLoanIdLessThenOrEqualToZero() {
+		this.loan.commit(0);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testCommitWhenCurrent() {
+		this.loan.commit(1);
+		this.loan.commit(1);
+	}
+	
+/*
 	@Test
 	public void testComplete() {
 		fail("Not yet implemented");

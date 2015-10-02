@@ -6,12 +6,17 @@ import library.interfaces.entities.IBook;
 import library.interfaces.entities.ILoan;
 import library.interfaces.entities.IMember;
 
+import library.interfaces.entities.ELoanState;
+
 public class Loan implements ILoan {
 	private IBook book;
 	private IMember member;
+	private ELoanState loanState;
 	
 	private Date borrowDate;
 	private Date dueDate;
+	
+	private int loanID;
 	
 	public Loan(IBook book, IMember member, Date borrowDate, Date dueDate) {
 		//Make sure we havent been passed any null values
@@ -27,12 +32,25 @@ public class Loan implements ILoan {
 		this.member =member;
 		this.borrowDate =borrowDate;
 		this.dueDate =dueDate;
+		
+		this.loanState =ELoanState.PENDING;
 	}
 
 	@Override
-	public void commit(int id) {
-		// TODO Auto-generated method stub
+	public void commit(int loanID) {
+		if(loanID <=0) {
+			throw new IllegalArgumentException("Loan ID cannot be less then or equal to zero");
+		}
 		
+		if(this.loanState !=ELoanState.PENDING) {
+			throw new RuntimeException("Current loan state is not pending");
+		}
+		
+		this.loanID =loanID;
+		
+		this.loanState =ELoanState.CURRENT;
+		this.book.borrow(this);
+		member.addLoan(this);
 	}
 
 	@Override
@@ -49,8 +67,7 @@ public class Loan implements ILoan {
 
 	@Override
 	public boolean isCurrent() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.loanState ==ELoanState.CURRENT;
 	}
 
 	@Override
@@ -73,8 +90,7 @@ public class Loan implements ILoan {
 
 	@Override
 	public int getID() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.loanID;
 	}
 
 }
