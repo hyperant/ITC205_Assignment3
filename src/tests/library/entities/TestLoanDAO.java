@@ -3,7 +3,9 @@ package tests.library.entities;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import library.daos.LoanDAO;
 import library.interfaces.daos.ILoanDAO;
@@ -80,11 +82,10 @@ public class TestLoanDAO {
 		
 		//Execute
 		this.loanDAO.commitLoan(loan);
-		int loanID =loan.getID();
 		
 		//Verify and assert
-		verify(loan).commit(loanID);
-		assertEquals(loan, this.loanDAO.getLoanByID(loanID));
+		verify(loan).commit(1);
+		assertEquals(loan, this.loanDAO.getLoanByID(1));
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -99,11 +100,10 @@ public class TestLoanDAO {
 		
 		//Execute
 		this.loanDAO.commitLoan(loan);
-		int loanID =loan.getID();
 		
 		//Verify and assert
-		verify(loan).commit(loanID);
-		assertEquals(loan, this.loanDAO.getLoanByID(loanID));
+		verify(loan).commit(1);
+		assertEquals(loan, this.loanDAO.getLoanByID(1));
 	}
 	
 	@Test
@@ -113,11 +113,10 @@ public class TestLoanDAO {
 		
 		//Execute
 		this.loanDAO.commitLoan(loan);
-		int loanID =loan.getID();
 		
 		//Verify and assert
-		verify(loan).commit(loanID);
-		assertNull(this.loanDAO.getLoanByID(loanID +10)); //Because the loanID is the last loan commited we can assume +10 will be invalid
+		verify(loan).commit(1);
+		assertNull(this.loanDAO.getLoanByID(10));
 	}
 	
 	@Test
@@ -130,10 +129,9 @@ public class TestLoanDAO {
 		
 		//Execute
 		this.loanDAO.commitLoan(loan);
-		int loanID =loan.getID();
 		
 		//Verify and assert
-		verify(loan).commit(loanID);
+		verify(loan).commit(1);
 		ILoan actualLoan =this.loanDAO.getLoanByBook(book);
 		verify(loan).getBook();
 		assertEquals(loan, actualLoan);
@@ -149,10 +147,9 @@ public class TestLoanDAO {
 		
 		//Execute
 		this.loanDAO.commitLoan(loan);
-		int loanID =loan.getID();
 		
 		//Verify and assert
-		verify(loan).commit(loanID);
+		verify(loan).commit(1);
 		ILoan actualLoan =this.loanDAO.getLoanByBook(mock(IBook.class));
 		verify(loan).getBook();
 		assertEquals(null, actualLoan);
@@ -163,12 +160,52 @@ public class TestLoanDAO {
 		this.loanDAO.getLoanByBook(null);
 	}
 	
-/*
-	@Test
-	public void testListLoans() {
-		fail("Not yet implemented");
-	}
 
+	@Test
+	public void testListLoansSize() {
+		//Setup
+		List<ILoan> loanList =new ArrayList<ILoan>();
+		for(int i =0; i <1; i++) {
+			//ILoan tmpLoan =mock(ILoan.class);
+			loanList.add(mock(ILoan.class));
+		}
+		
+		//Execute and verify
+		for(int i =0; i <loanList.size(); i++) {
+			ILoan tmpLoan =loanList.get(i);
+			this.loanDAO.commitLoan(tmpLoan);
+			verify(loanList.get(i)).commit(i +1);
+		}
+		
+		List<ILoan> actualList =this.loanDAO.listLoans();
+		assertEquals(loanList.size(), actualList.size());
+	}
+	
+	@Test
+	public void testListLoansMatch() {
+		//Setup
+		List<ILoan> loanList =new ArrayList<ILoan>();
+		for(int i =0; i <1; i++) {
+			//ILoan tmpLoan =mock(ILoan.class);
+			loanList.add(mock(ILoan.class));
+		}
+		
+		//Execute and verify
+		for(int i =0; i <loanList.size(); i++) {
+			ILoan tmpLoan =loanList.get(i);
+			this.loanDAO.commitLoan(tmpLoan);
+			verify(loanList.get(i)).commit(i +1);
+		}
+		
+		List<ILoan> actualList =this.loanDAO.listLoans();
+		assertEquals(loanList.size(), actualList.size());
+		
+		for(int i =0; i <loanList.size(); i++) {
+			assertEquals(loanList.get(i), actualList.get(i));
+		}
+	}
+	
+/*
 	@Test
 	public void testFindLoansByBorrower() {
 		fail("Not yet implemented");

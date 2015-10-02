@@ -1,5 +1,6 @@
 package library.daos;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,9 +50,8 @@ public class LoanDAO implements ILoanDAO {
 			throw new IllegalArgumentException("loan cannot be null");
 		}
 		
-		int loanID =this.nextLoanID++;
+		int loanID =++this.nextLoanID;
 		loan.commit(loanID);
-		
 		this.loanMap.put(loanID, loan);
 	}
 
@@ -82,8 +82,7 @@ public class LoanDAO implements ILoanDAO {
 
 	@Override
 	public List<ILoan> listLoans() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<ILoan>(this.loanMap.values());
 	}
 
 	@Override
