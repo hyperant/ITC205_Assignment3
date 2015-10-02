@@ -32,6 +32,7 @@ public class Loan implements ILoan {
 		this.member =member;
 		this.borrowDate =borrowDate;
 		this.dueDate =dueDate;
+		this.loanID =0;
 		
 		this.loanState =ELoanState.PENDING;
 	}
