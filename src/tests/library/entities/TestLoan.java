@@ -148,7 +148,13 @@ public class TestLoan {
 	
 	@Test
 	public void testIsCurrent() {
-		//fail("Not yet implemented");
+		this.loan.commit(1);
+		assertTrue(this.loan.isCurrent());
+	}
+	
+	@Test
+	public void testIsCurrentNoneCurrentState() {
+		assertFalse(this.loan.isCurrent());
 	}
 
 	@Test
