@@ -120,13 +120,50 @@ public class TestLoanDAO {
 		assertNull(this.loanDAO.getLoanByID(loanID +10)); //Because the loanID is the last loan commited we can assume +10 will be invalid
 	}
 	
-	/*
-
 	@Test
 	public void testGetLoanByBook() {
-		fail("Not yet implemented");
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		IBook book =mock(IBook.class);
+		
+		when(loan.getBook()).thenReturn(book);
+		
+		//Execute
+		this.loanDAO.commitLoan(loan);
+		int loanID =loan.getID();
+		
+		//Verify and assert
+		verify(loan).commit(loanID);
+		ILoan actualLoan =this.loanDAO.getLoanByBook(book);
+		verify(loan).getBook();
+		assertEquals(loan, actualLoan);
 	}
-
+	
+	@Test
+	public void testGetLoanByBookNoBookMatch() {
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		IBook book =mock(IBook.class);
+		
+		when(loan.getBook()).thenReturn(book);
+		
+		//Execute
+		this.loanDAO.commitLoan(loan);
+		int loanID =loan.getID();
+		
+		//Verify and assert
+		verify(loan).commit(loanID);
+		ILoan actualLoan =this.loanDAO.getLoanByBook(mock(IBook.class));
+		verify(loan).getBook();
+		assertEquals(null, actualLoan);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testGetLoanByBookBadParamBook() {
+		this.loanDAO.getLoanByBook(null);
+	}
+	
+/*
 	@Test
 	public void testListLoans() {
 		fail("Not yet implemented");

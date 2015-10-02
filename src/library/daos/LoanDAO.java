@@ -66,7 +66,17 @@ public class LoanDAO implements ILoanDAO {
 
 	@Override
 	public ILoan getLoanByBook(IBook book) {
-		// TODO Auto-generated method stub
+		//Even though this is not in the specification I think that we should do a check for it just in case.
+		if(book ==null) {
+			throw new IllegalArgumentException("book cannot be null");
+		}
+		
+		for(ILoan loan : this.loanMap.values()) {
+			if(book.equals(loan.getBook())) {
+				return loan;
+			}
+		}
+		
 		return null;
 	}
 
