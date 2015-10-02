@@ -1,4 +1,4 @@
-package tests.library.entities;
+package tests.library.daos;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
