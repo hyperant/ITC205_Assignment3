@@ -87,8 +87,7 @@ public class Loan implements ILoan {
 
 	@Override
 	public IMember getBorrower() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.member;
 	}
 
 	@Override

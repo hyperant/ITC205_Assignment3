@@ -191,12 +191,17 @@ public class TestLoan {
 		assertFalse(this.loan.checkOverDue(currentDate));
 	}
 
-/*
 	@Test
 	public void testGetBorrower() {
-		fail("Not yet implemented");
+		assertEquals(this.member, this.loan.getBorrower());
 	}
-
+	
+	@Test
+	public void testGetBorrowerDoNotMatch() {
+		assertNotEquals(mock(IMember.class), this.loan.getBorrower());
+	}
+	
+/*
 	@Test
 	public void testGetBook() {
 		fail("Not yet implemented");
