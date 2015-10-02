@@ -44,6 +44,11 @@ public class LoanDAO implements ILoanDAO {
 
 	@Override
 	public void commitLoan(ILoan loan) {
+		//Even though this is not in the specification I think that we should do a check for it just in case.
+		if(loan ==null) {
+			throw new IllegalArgumentException("loan cannot be null");
+		}
+		
 		int loanID =this.nextLoanID++;
 		loan.commit(loanID);
 		

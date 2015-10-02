@@ -87,6 +87,11 @@ public class TestLoanDAO {
 		assertEquals(loan, this.loanDAO.getLoanByID(loanID));
 	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testCommitLoanBadParamLoan() {
+		this.loanDAO.commitLoan(null);
+	}
+	
 	@Test
 	public void testGetLoanByID() {
 		//Setup
