@@ -55,8 +55,11 @@ public class Loan implements ILoan {
 
 	@Override
 	public void complete() {
-		// TODO Auto-generated method stub
+		if(this.loanState ==ELoanState.COMPLETE || this.loanState ==ELoanState.PENDING) {
+			throw new RuntimeException("Current loan state is not current or overdue: " +this.loanState);
+		}
 		
+		this.loanState =ELoanState.COMPLETE;
 	}
 
 	@Override

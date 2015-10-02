@@ -115,12 +115,21 @@ public class TestLoan {
 		this.loan.commit(1);
 	}
 	
-/*
 	@Test
 	public void testComplete() {
-		fail("Not yet implemented");
+		this.loan.commit(1);
+		assertTrue(this.loan.isCurrent());
+		
+		this.loan.complete();
+		assertFalse(this.loan.isCurrent());
 	}
-
+	
+	@Test(expected=RuntimeException.class)
+	public void testCompleteWhenNotCurrent() {
+		this.loan.complete();
+	}
+	
+/*
 	@Test
 	public void testIsOverDue() {
 		fail("Not yet implemented");
