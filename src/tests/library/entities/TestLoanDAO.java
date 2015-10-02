@@ -316,9 +316,6 @@ public class TestLoanDAO {
 	public void testUpdateOverDueStatus() {
 		//Setup requerd classes
 		Calendar cal =Calendar.getInstance();
-		Date borrowDate =cal.getTime();
-		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD);
-		Date dueDate =cal.getTime();
 		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD +20);
 		Date currentDate =cal.getTime();
 		
@@ -350,39 +347,27 @@ public class TestLoanDAO {
 		this.loanDAO.updateOverDueStatus(null);
 	}
 	
-	/*
 	@Test
 	public void testFindOverDueLoans() {
 		//Setup requerd classes
-		Calendar cal =Calendar.getInstance();
-		Date borrowDate =cal.getTime();
-		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD);
-		Date dueDate =cal.getTime();
-		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD +20);
-		Date currentDate =cal.getTime();
-		
 		IMember member =mock(IMember.class);
 		IBook book =mock(IBook.class);
 		ILoan mockLoan =mock(ILoan.class);
 		
 		when(this.helper.makeLoan(eq(book), eq(member), any(Date.class), any(Date.class))).thenReturn(mockLoan);
-
-		ILoan loan =this.loanDAO.createLoan(member, book);
+		when(mockLoan.isOverDue()).thenReturn(true); //Force everything to be overdue
 		
+		ILoan loan =this.loanDAO.createLoan(member, book);
+
 		//Check to make sure everything is correct
 		verify(this.helper).makeLoan(eq(book), eq(member), any(Date.class), any(Date.class));
 		assertEquals(mockLoan, loan);
 		
 		this.loanDAO.commitLoan(loan);
 		verify(loan).commit(1);
-
-		//Execute the function we want to test
-		this.loanDAO.updateOverDueStatus(currentDate);
-		verify(loan).checkOverDue(currentDate);
 		
 		//Execute the function we want to test
 		List<ILoan> loanList =this.loanDAO.findOverDueLoans();
-		assertEquals(1, loanList);
+		assertEquals(1, loanList.size());
 	}
-	*/
 }
