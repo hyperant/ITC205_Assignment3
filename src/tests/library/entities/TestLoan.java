@@ -129,10 +129,21 @@ public class TestLoan {
 		this.loan.complete();
 	}
 	
-
 	@Test
 	public void testIsOverDue() {
-		//fail("Not yet implemented");
+		Calendar cal =Calendar.getInstance();
+		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD +5); //Force the current time to be 5 days in front of due date
+		Date currentDate =cal.getTime(); 
+		
+		this.loan.commit(1);
+		assertTrue(this.loan.isCurrent());
+		assertTrue(this.loan.checkOverDue(currentDate));
+		assertTrue(this.loan.isOverDue());
+	}
+	
+	@Test
+	public void testIsOverDueNoneOverdue() {
+		assertFalse(this.loan.isOverDue());
 	}
 	
 	@Test
@@ -149,7 +160,7 @@ public class TestLoan {
 		this.loan.commit(1);
 		assertTrue(this.loan.isCurrent());
 		assertTrue(this.loan.checkOverDue(currentDate));
-		assertFalse(this.loan.isCurrent()); //Make sure we are overdue
+		assertTrue(this.loan.isOverDue()); //Make sure we are overdue
 	}
 	
 	@Test
