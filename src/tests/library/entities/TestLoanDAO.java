@@ -165,7 +165,7 @@ public class TestLoanDAO {
 	public void testListLoansSize() {
 		//Setup
 		List<ILoan> loanList =new ArrayList<ILoan>();
-		for(int i =0; i <1; i++) {
+		for(int i =0; i <4; i++) {
 			loanList.add(mock(ILoan.class));
 		}
 		
@@ -184,7 +184,7 @@ public class TestLoanDAO {
 	public void testListLoansMatch() {
 		//Setup
 		List<ILoan> loanList =new ArrayList<ILoan>();
-		for(int i =0; i <1; i++) {
+		for(int i =0; i <4; i++) {
 			loanList.add(mock(ILoan.class));
 		}
 		
@@ -210,7 +210,7 @@ public class TestLoanDAO {
 		List<ILoan> loanList =new ArrayList<ILoan>();
 		IMember mockBorrower =mock(IMember.class);
 		
-		for(int i =0; i <1; i++) {
+		for(int i =0; i <4; i++) {
 			ILoan tmpLoan =mock(ILoan.class);
 			loanList.add(tmpLoan);
 			when(tmpLoan.getBorrower()).thenReturn(mockBorrower);
@@ -233,7 +233,7 @@ public class TestLoanDAO {
 		List<ILoan> loanList =new ArrayList<ILoan>();
 		IMember mockBorrower =mock(IMember.class);
 		
-		for(int i =0; i <1; i++) {
+		for(int i =0; i <4; i++) {
 			ILoan tmpLoan =mock(ILoan.class);
 			loanList.add(tmpLoan);
 			when(tmpLoan.getBorrower()).thenReturn(mockBorrower);
@@ -258,18 +258,18 @@ public class TestLoanDAO {
 	public void testFindLoansByBorrowerBadParamBorrower() {
 		List<ILoan> actualList =this.loanDAO.findLoansByBorrower(null);
 	}
-	
-/*
+
 	@Test
-	public void testFindLoansByBookTitle() {
-		fail("Not yet implemented");
-		
+	public void testFindLoansByBookTitleSize() {
 		//Setup
 		List<ILoan> loanList =new ArrayList<ILoan>();
-		for(int i =0; i <1; i++) {
+		for(int i =0; i <4; i++) {
+			IBook mockBook =mock(IBook.class);
 			ILoan tmpLoan =mock(ILoan.class);
 			loanList.add(tmpLoan);
-			when(tmpLoan.getBook().getTitle()).thenReturn("title" +i);
+			
+			when(tmpLoan.getBook()).thenReturn(mockBook);
+			when(mockBook.getTitle()).thenReturn("title" +i);
 		}
 		
 		//Execute and verify
@@ -279,8 +279,39 @@ public class TestLoanDAO {
 			verify(loanList.get(i)).commit(i +1);
 		}
 		
+		List<ILoan> actualList =this.loanDAO.findLoansByBookTitle("title" +2);
+		assertEquals(1, actualList.size());
 	}
-
+	
+	@Test
+	public void testFindLoansByBookTitleMatch() {
+		//Setup
+		List<ILoan> loanList =new ArrayList<ILoan>();
+		for(int i =0; i <4; i++) {
+			IBook mockBook =mock(IBook.class);
+			ILoan tmpLoan =mock(ILoan.class);
+			loanList.add(tmpLoan);
+			
+			when(tmpLoan.getBook()).thenReturn(mockBook);
+			when(mockBook.getTitle()).thenReturn("title" +i);
+		}
+		
+		//Execute and verify
+		for(int i =0; i <loanList.size(); i++) {
+			ILoan tmpLoan =loanList.get(i);
+			this.loanDAO.commitLoan(tmpLoan);
+			verify(loanList.get(i)).commit(i +1);
+		}
+		
+		List<ILoan> actualList =this.loanDAO.findLoansByBookTitle("title" +0);
+		assertEquals(1, actualList.size());
+		
+		for(int i =0; i <actualList.size(); i++) {
+			assertEquals(loanList.get(i), actualList.get(i));
+		}
+	}
+	
+/*
 	@Test
 	public void testUpdateOverDueStatus() {
 		fail("Not yet implemented");
