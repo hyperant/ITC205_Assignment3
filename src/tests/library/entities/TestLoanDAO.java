@@ -87,11 +87,35 @@ public class TestLoanDAO {
 		assertEquals(loan, this.loanDAO.getLoanByID(loanID));
 	}
 	
-/*
 	@Test
 	public void testGetLoanByID() {
-		fail("Not yet implemented");
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		
+		//Execute
+		this.loanDAO.commitLoan(loan);
+		int loanID =loan.getID();
+		
+		//Verify and assert
+		verify(loan).commit(loanID);
+		assertEquals(loan, this.loanDAO.getLoanByID(loanID));
 	}
+	
+	@Test
+	public void testGetLoanByIDNoMatch() {
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		
+		//Execute
+		this.loanDAO.commitLoan(loan);
+		int loanID =loan.getID();
+		
+		//Verify and assert
+		verify(loan).commit(loanID);
+		assertNull(this.loanDAO.getLoanByID(loanID +10)); //Because the loanID is the last loan commited we can assume +10 will be invalid
+	}
+	
+	/*
 
 	@Test
 	public void testGetLoanByBook() {
