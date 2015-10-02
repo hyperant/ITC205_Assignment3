@@ -2,18 +2,16 @@ package tests.library.entities;
 
 import static org.junit.Assert.*;
 
+import static org.mockito.Mockito.*;
+
 import java.util.Date;
 import java.util.Calendar;
 
 import library.entities.Loan;
-import library.entities.BookStub;
-import library.entities.MemberStub;
 
 import library.interfaces.entities.IBook;
 import library.interfaces.entities.ILoan;
 import library.interfaces.entities.IMember;
-
-
 
 import org.junit.After;
 import org.junit.Before;
@@ -30,8 +28,8 @@ public class TestLoan {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.book =new BookStub();
-		this.member =new MemberStub();
+		this.book =mock(IBook.class);
+		this.member =mock(IMember.class);
 		
 		this.cal =Calendar.getInstance();
 		this.borrowDate =this.cal.getTime();
