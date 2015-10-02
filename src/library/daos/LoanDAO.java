@@ -87,14 +87,33 @@ public class LoanDAO implements ILoanDAO {
 
 	@Override
 	public List<ILoan> findLoansByBorrower(IMember borrower) {
-		// TODO Auto-generated method stub
-		return null;
+		//Even though this is not in the specification I think that we should do a check for it just in case.
+		if(borrower ==null) {
+			throw new IllegalArgumentException("borrower cannot be null");
+		}
+		
+		List<ILoan> loanList =new ArrayList<ILoan>();
+		for(ILoan loan : this.loanMap.values()) {
+			if(borrower.equals(loan.getBorrower())) {
+				loanList.add(loan);
+			}
+		}
+		
+		return loanList;
 	}
 
 	@Override
 	public List<ILoan> findLoansByBookTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
+		List<ILoan> loanList =new ArrayList<ILoan>();
+		
+		for(ILoan loan : this.loanMap.values()) {
+			if(loan.getBook().getTitle().equals(title)) {
+				loanList.add(loan);
+			}
+				
+		}
+		
+		return loanList;
 	}
 
 	@Override
