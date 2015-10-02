@@ -151,12 +151,26 @@ public class TestBook {
 		this.book.lose();
 	}
 	
-/*
 	@Test
 	public void testRepair() {
-		fail("Not yet implemented");
+		ILoan loan =mock(ILoan.class);
+		
+		this.book.borrow(loan);
+		assertEquals(this.book.getState(), EBookState.ON_LOAN);
+		
+		this.book.returnBook(true);
+		assertEquals(this.book.getState(), EBookState.DAMAGED);
+		
+		this.book.repair();
+		assertEquals(this.book.getState(), EBookState.AVAILABLE);
 	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testRepairNotDamaged() {		
+		this.book.repair();
+	}	
 
+	/*
 	@Test
 	public void testDispose() {
 		fail("Not yet implemented");
