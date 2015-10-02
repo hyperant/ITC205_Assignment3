@@ -326,7 +326,46 @@ public class TestLoanDAO {
 		IBook book =mock(IBook.class);
 		ILoan mockLoan =mock(ILoan.class);
 		
-		when(this.helper.makeLoan(eq(book), eq(member), eq(borrowDate), eq(dueDate))).thenReturn(mockLoan);
+		when(this.helper.makeLoan(eq(book), eq(member), any(Date.class), any(Date.class))).thenReturn(mockLoan);
+		when(mockLoan.checkOverDue(any(Date.class))).thenReturn(true); //Force everything to be overdue
+		
+		ILoan loan =this.loanDAO.createLoan(member, book);
+
+		//Check to make sure everything is correct
+		verify(this.helper).makeLoan(eq(book), eq(member), any(Date.class), any(Date.class));
+		assertEquals(mockLoan, loan);
+		
+		this.loanDAO.commitLoan(loan);
+		verify(loan).commit(1);
+
+		//Execute the function we want to test
+		this.loanDAO.updateOverDueStatus(currentDate);
+		verify(loan).checkOverDue(currentDate);
+		
+		verify(mockLoan).checkOverDue(any(Date.class)); //Make sure we checked the overdue status
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testUpdateOverDueStatusBadParamCurrentDate() {
+		this.loanDAO.updateOverDueStatus(null);
+	}
+	
+	/*
+	@Test
+	public void testFindOverDueLoans() {
+		//Setup requerd classes
+		Calendar cal =Calendar.getInstance();
+		Date borrowDate =cal.getTime();
+		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD);
+		Date dueDate =cal.getTime();
+		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD +20);
+		Date currentDate =cal.getTime();
+		
+		IMember member =mock(IMember.class);
+		IBook book =mock(IBook.class);
+		ILoan mockLoan =mock(ILoan.class);
+		
+		when(this.helper.makeLoan(eq(book), eq(member), any(Date.class), any(Date.class))).thenReturn(mockLoan);
 
 		ILoan loan =this.loanDAO.createLoan(member, book);
 		
@@ -340,17 +379,10 @@ public class TestLoanDAO {
 		//Execute the function we want to test
 		this.loanDAO.updateOverDueStatus(currentDate);
 		verify(loan).checkOverDue(currentDate);
+		
+		//Execute the function we want to test
+		List<ILoan> loanList =this.loanDAO.findOverDueLoans();
+		assertEquals(1, loanList);
 	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testUpdateOverDueStatusBadParamCurrentDate() {
-		this.loanDAO.updateOverDueStatus(null);
-	}
-	
-/*
-	@Test
-	public void testFindOverDueLoans() {
-		fail("Not yet implemented");
-	}
-*/
+	*/
 }
