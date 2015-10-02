@@ -2,7 +2,9 @@ package library.daos;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import library.interfaces.daos.ILoanDAO;
 import library.interfaces.daos.ILoanHelper;
@@ -12,13 +14,18 @@ import library.interfaces.entities.IMember;
 
 public class LoanDAO implements ILoanDAO {
 	private ILoanHelper helper;
+	private Map<Integer, ILoan> loanMap;
+	
+	private int nextLoanID;
 	
 	public LoanDAO(ILoanHelper helper) {
 		if(helper ==null) {
 			throw new IllegalArgumentException("helper cannot be null");
 		}
 		
-		this.helper =helper;			
+		this.helper =helper;
+		this.nextLoanID =0;
+		this.loanMap =new HashMap<Integer, ILoan>();
 	}
 
 	@Override
@@ -37,13 +44,18 @@ public class LoanDAO implements ILoanDAO {
 
 	@Override
 	public void commitLoan(ILoan loan) {
-		// TODO Auto-generated method stub
+		int loanID =this.nextLoanID++;
+		loan.commit(loanID);
 		
+		this.loanMap.put(loanID, loan);
 	}
 
 	@Override
 	public ILoan getLoanByID(int id) {
-		// TODO Auto-generated method stub
+		if(this.loanMap.containsKey((Integer)id)) {
+			return this.loanMap.get((Integer)id);
+		}
+		
 		return null;
 	}
 
