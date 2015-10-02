@@ -4,11 +4,21 @@ import java.util.Date;
 import java.util.List;
 
 import library.interfaces.daos.ILoanDAO;
+import library.interfaces.daos.ILoanHelper;
 import library.interfaces.entities.IBook;
 import library.interfaces.entities.ILoan;
 import library.interfaces.entities.IMember;
 
 public class LoanDAO implements ILoanDAO {
+	private ILoanHelper helper;
+	
+	public LoanDAO(ILoanHelper helper) {
+		if(helper ==null) {
+			throw new IllegalArgumentException("helper cannot be null");
+		}
+		
+		this.helper =helper;			
+	}
 
 	@Override
 	public ILoan createLoan(IMember borrower, IBook book) {
