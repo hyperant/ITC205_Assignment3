@@ -118,8 +118,14 @@ public class LoanDAO implements ILoanDAO {
 
 	@Override
 	public void updateOverDueStatus(Date currentDate) {
-		// TODO Auto-generated method stub
+		//Even though this is not in the specification I think that we should do a check for it just in case.
+		if(currentDate ==null) {
+			throw new IllegalArgumentException("currentDate cannot be null");
+		}
 		
+		for(ILoan loan : this.loanMap.values()) {
+			loan.checkOverDue(currentDate);
+		}
 	}
 
 	@Override

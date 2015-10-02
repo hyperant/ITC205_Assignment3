@@ -4,6 +4,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -311,12 +312,42 @@ public class TestLoanDAO {
 		}
 	}
 	
-/*
 	@Test
 	public void testUpdateOverDueStatus() {
-		fail("Not yet implemented");
-	}
+		//Setup requerd classes
+		Calendar cal =Calendar.getInstance();
+		Date borrowDate =cal.getTime();
+		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD);
+		Date dueDate =cal.getTime();
+		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD +20);
+		Date currentDate =cal.getTime();
+		
+		IMember member =mock(IMember.class);
+		IBook book =mock(IBook.class);
+		ILoan mockLoan =mock(ILoan.class);
+		
+		when(this.helper.makeLoan(eq(book), eq(member), eq(borrowDate), eq(dueDate))).thenReturn(mockLoan);
 
+		ILoan loan =this.loanDAO.createLoan(member, book);
+		
+		//Check to make sure everything is correct
+		verify(this.helper).makeLoan(eq(book), eq(member), any(Date.class), any(Date.class));
+		assertEquals(mockLoan, loan);
+		
+		this.loanDAO.commitLoan(loan);
+		verify(loan).commit(1);
+
+		//Execute the function we want to test
+		this.loanDAO.updateOverDueStatus(currentDate);
+		verify(loan).checkOverDue(currentDate);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testUpdateOverDueStatusBadParamCurrentDate() {
+		this.loanDAO.updateOverDueStatus(null);
+	}
+	
+/*
 	@Test
 	public void testFindOverDueLoans() {
 		fail("Not yet implemented");
