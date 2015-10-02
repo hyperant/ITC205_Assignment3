@@ -1,5 +1,6 @@
 package library.daos;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +23,16 @@ public class LoanDAO implements ILoanDAO {
 
 	@Override
 	public ILoan createLoan(IMember borrower, IBook book) {
-		// TODO Auto-generated method stub
-		return null;
+		if(borrower ==null || book ==null) {
+			throw new IllegalArgumentException("borrow or book cannot be null");
+		}
+		
+		Calendar cal =Calendar.getInstance();
+		Date borrowDate =cal.getTime();
+		cal.add(Calendar.DATE, ILoan.LOAN_PERIOD);
+		Date dueDate =cal.getTime();
+		
+		return this.helper.makeLoan(book, borrower, borrowDate, dueDate);
 	}
 
 	@Override

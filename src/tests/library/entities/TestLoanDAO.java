@@ -2,9 +2,15 @@ package tests.library.entities;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
+
+import java.util.Date;
+
 import library.daos.LoanDAO;
 import library.interfaces.daos.ILoanDAO;
 import library.interfaces.daos.ILoanHelper;
+import library.interfaces.entities.IBook;
+import library.interfaces.entities.ILoan;
+import library.interfaces.entities.IMember;
 
 import org.junit.After;
 import org.junit.Before;
@@ -36,14 +42,37 @@ public class TestLoanDAO {
 	public void testConstructorHelperNull() {
 		LoanDAO loanDAO =new LoanDAO(null);
 	}
-	
-/*
+
 	@Test
 	public void testCreateLoan() {
-		fail("Not yet implemented");
+		//Setup requerd classes
+		IMember member =mock(IMember.class);
+		IBook book =mock(IBook.class);
+		ILoan mockLoan =mock(ILoan.class);
+		
+		when(this.helper.makeLoan(eq(book), eq(member), any(Date.class), any(Date.class))).thenReturn(mockLoan);
+
+		//execute the function we want to test
+		ILoan loan =this.loanDAO.createLoan(member, book);
+		
+		//Check to make sure everything is correct
+		verify(this.helper).makeLoan(eq(book), eq(member), any(Date.class), any(Date.class));
+		assertEquals(mockLoan, loan);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testCreateLoanBadParamMember() {
+		IBook book =mock(IBook.class);
+		ILoan loan =this.loanDAO.createLoan(null, book);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testCreateLoanBadParamBook() {
+		IMember member =mock(IMember.class);
+		ILoan loan =this.loanDAO.createLoan(member, null);
 	}
 
-	
+/*	
 	@Test
 	public void testCommitLoan() {
 		fail("Not yet implemented");
