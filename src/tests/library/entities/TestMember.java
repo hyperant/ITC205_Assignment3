@@ -168,12 +168,16 @@ public class TestMember {
 		assertFalse(this.member.hasReachedFineLimit());
 	}
 
-	/*
 	@Test
 	public void testGetFineAmount() {
-		fail("Not yet implemented");
+		//Setup
+		this.member.addFine(5.50f);
+		
+		//Assert
+		assertEquals(5.50f, this.member.getFineAmount(), 0.0f);
 	}
 
+	/*
 	@Test
 	public void testAddFine() {
 		fail("Not yet implemented");

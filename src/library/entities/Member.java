@@ -84,8 +84,7 @@ public class Member implements IMember {
 
 	@Override
 	public float getFineAmount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.totalFines;
 	}
 
 	@Override
