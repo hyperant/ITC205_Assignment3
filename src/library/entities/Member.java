@@ -70,12 +70,15 @@ public class Member implements IMember {
 			return true;
 		}
 		
-	return false;
+		return false;
 	}
 
 	@Override
 	public boolean hasReachedFineLimit() {
-		// TODO Auto-generated method stub
+		if(this.totalFines >=FINE_LIMIT) {
+			return true;
+		}
+		
 		return false;
 	}
 
