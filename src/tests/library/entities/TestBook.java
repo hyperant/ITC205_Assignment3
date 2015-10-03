@@ -215,12 +215,14 @@ public class TestBook {
 		this.book.dispose();
 	}
 	
-/*
+
 	@Test
 	public void testGetState() {
-		fail("Not yet implemented");
+		//The book has a state of availble when first setup, we can determine this function is working if we get back availble
+		assertEquals(this.book.getState(), EBookState.AVAILABLE);
 	}
-
+	
+/*
 	@Test
 	public void testGetAuthor() {
 		fail("Not yet implemented");
