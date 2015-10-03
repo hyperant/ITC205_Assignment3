@@ -215,32 +215,30 @@ public class TestBook {
 		this.book.dispose();
 	}
 	
-
 	@Test
 	public void testGetState() {
 		//The book has a state of availble when first setup, we can determine this function is working if we get back availble
 		assertEquals(this.book.getState(), EBookState.AVAILABLE);
 	}
 	
-/*
 	@Test
 	public void testGetAuthor() {
-		fail("Not yet implemented");
+		assertTrue(this.author.equals(this.book.getAuthor()));
 	}
 
 	@Test
 	public void testGetTitle() {
-		fail("Not yet implemented");
+		assertTrue(this.title.equals(this.book.getTitle()));
 	}
 
 	@Test
 	public void testGetCallNumber() {
-		fail("Not yet implemented");
+		assertTrue(this.callNumber.equals(this.book.getCallNumber()));
 	}
 
 	@Test
 	public void testGetID() {
-		fail("Not yet implemented");
+		assertEquals(this.bookID, this.book.getID());
 	}
-*/
+
 }
