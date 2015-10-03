@@ -121,12 +121,48 @@ public class TestBookDAO {
 		List<IBook> bookList =this.bookDAO.listBooks();
 		assertEquals(1, bookList.size());
 	}
-/*
+
 	@Test
 	public void testFindBooksByAuthor() {
-		fail("Not yet implemented");
+		//Setup
+		IBook mockBook =mock(IBook.class);
+		when(this.helper.makeBook(eq(this.author), eq(this.title), eq(this.callNumber), eq(this.bookID))).thenReturn(mockBook);
+		when(mockBook.getAuthor()).thenReturn(this.author);
+		
+		//Execute
+		IBook book =this.bookDAO.addBook(this.author, this.title, this.callNumber);
+		
+		//Verify and assert
+		verify(this.helper).makeBook(eq(this.author), eq(this.title), eq(this.callNumber), eq(this.bookID));
+		assertEquals(book, mockBook);
+		
+		//Actual test
+		List<IBook> bookList =this.bookDAO.findBooksByAuthor(this.author);
+		verify(mockBook).getAuthor();
+		assertEquals(1, bookList.size());
+	}
+	
+	@Test
+	public void testFindBooksByAuthorNonExistentAuthor() {
+		//Setup
+		IBook mockBook =mock(IBook.class);
+		when(this.helper.makeBook(eq(this.author), eq(this.title), eq(this.callNumber), eq(this.bookID))).thenReturn(mockBook);
+		when(mockBook.getAuthor()).thenReturn(this.author);
+		
+		//Execute
+		IBook book =this.bookDAO.addBook(this.author, this.title, this.callNumber);
+		
+		//Verify and assert
+		verify(this.helper).makeBook(eq(this.author), eq(this.title), eq(this.callNumber), eq(this.bookID));
+		assertEquals(book, mockBook);
+		
+		//Actual test
+		List<IBook> bookList =this.bookDAO.findBooksByAuthor("i do not exist");
+		verify(mockBook).getAuthor();
+		assertEquals(0, bookList.size());
 	}
 
+	/*
 	@Test
 	public void testFindBooksByTitle() {
 		fail("Not yet implemented");
