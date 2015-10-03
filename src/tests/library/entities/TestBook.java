@@ -170,12 +170,52 @@ public class TestBook {
 		this.book.repair();
 	}	
 
-	/*
+	
 	@Test
-	public void testDispose() {
-		fail("Not yet implemented");
+	public void testDisposeAvailble() {
+		this.book.dispose();
+		assertEquals(this.book.getState(), EBookState.DISPOSED);
 	}
-
+	
+	@Test
+	public void testDisposeDamaged() {
+		ILoan loan =mock(ILoan.class);
+		
+		this.book.borrow(loan);
+		assertEquals(this.book.getState(), EBookState.ON_LOAN);
+		
+		this.book.returnBook(true);
+		assertEquals(this.book.getState(), EBookState.DAMAGED);
+		
+		this.book.dispose();
+		assertEquals(this.book.getState(), EBookState.DISPOSED);
+	}
+	
+	@Test
+	public void testDisposeLost() {
+		ILoan loan =mock(ILoan.class);
+		
+		this.book.borrow(loan);
+		assertEquals(this.book.getState(), EBookState.ON_LOAN);
+		
+		this.book.lose();
+		assertEquals(this.book.getState(), EBookState.LOST);
+		
+		this.book.dispose();
+		assertEquals(this.book.getState(), EBookState.DISPOSED);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testDisposeBookOnLoan() {
+		ILoan loan =mock(ILoan.class);
+		
+		this.book.borrow(loan);
+		assertEquals(this.book.getState(), EBookState.ON_LOAN);
+		
+		this.book.dispose();
+	}
+	
+/*
 	@Test
 	public void testGetState() {
 		fail("Not yet implemented");

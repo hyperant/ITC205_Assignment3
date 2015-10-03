@@ -94,8 +94,11 @@ public class Book implements IBook  {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		if(!(this.bookState ==EBookState.AVAILABLE || this.bookState ==EBookState.DAMAGED || this.bookState ==EBookState.LOST)) {
+			throw new RuntimeException("Book is not currently available, damaged, or lost: " +this.bookState);
+		}
 		
+		this.bookState =EBookState.DISPOSED;
 	}
 
 	@Override
