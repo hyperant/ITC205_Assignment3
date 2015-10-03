@@ -129,7 +129,6 @@ public class Member implements IMember {
 
 	@Override
 	public List<ILoan> getLoans() {
-		// TODO Auto-generated method stub
 		return this.loanList;
 	}
 

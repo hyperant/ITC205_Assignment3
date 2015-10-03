@@ -242,12 +242,17 @@ public class TestMember {
 		}
 	}
 
-	/*
 	@Test
 	public void testGetLoans() {
-		fail("Not yet implemented");
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		this.member.addLoan(loan);
+		
+		//Assert
+		assertEquals(1, this.member.getLoans().size());
 	}
 
+	/*
 	@Test
 	public void testRemoveLoan() {
 		fail("Not yet implemented");
