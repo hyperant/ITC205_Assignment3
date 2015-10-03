@@ -64,8 +64,15 @@ public class BookDAO implements IBookDAO {
 
 	@Override
 	public List<IBook> findBooksByTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
+		List<IBook> bookList =new ArrayList<IBook>();
+		
+		for(IBook book : this.bookMap.values()) {
+			if(book.getTitle().equals(title)) {
+				bookList.add(book);
+			}
+		}
+		
+		return bookList;
 	}
 
 	@Override
