@@ -1,11 +1,29 @@
 package library.daos;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import library.entities.Member;
 import library.interfaces.daos.IMemberDAO;
+import library.interfaces.daos.IMemberHelper;
 import library.interfaces.entities.IMember;
 
 public class MemberDAO implements IMemberDAO {
+	
+	private IMemberHelper memberHelper;
+	private int nextMemberID;
+	private Map<Integer, IMember> memberMap;
+
+	public MemberDAO(IMemberHelper memberHelper) {
+		if(memberHelper ==null) {
+			throw new IllegalArgumentException("Bad parameter: memberHelper can not be null");
+		}
+		
+		this.memberHelper =memberHelper;
+		this.nextMemberID =0;
+		this.memberMap =new HashMap<Integer, IMember>();
+	}
 
 	@Override
 	public IMember addMember(String firstName, String lastName,
