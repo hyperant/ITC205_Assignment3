@@ -77,8 +77,19 @@ public class BookDAO implements IBookDAO {
 
 	@Override
 	public List<IBook> findBooksByAuthorTitle(String author, String title) {
-		// TODO Auto-generated method stub
-		return null;
+		List<IBook> bookList =new ArrayList<IBook>();
+		
+		for(IBook book : this.bookMap.values()) {
+			//The specification doesnt say if we should treat a book with the
+			//title and author that match as one book or two, To me it makes more sense to treat it as one book only
+			if(book.getTitle().equals(title) || book.getAuthor().equals(author)) {
+				bookList.add(book);
+			} //else if(book.getAuthor().equals(author)) {
+			//	bookList.add(book);
+			//}
+		}
+		
+		return bookList;
 	}
 
 }
