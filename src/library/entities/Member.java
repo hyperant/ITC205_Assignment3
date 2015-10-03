@@ -98,8 +98,15 @@ public class Member implements IMember {
 
 	@Override
 	public void payFine(float payment) {
-		// TODO Auto-generated method stub
+		if(payment <0) {
+			throw new IllegalArgumentException("Bad parameter: payment must be greater then or equal to 0");
+		}
 		
+		if(payment >this.totalFines) {
+			throw new IllegalArgumentException("Bad parameter: you can not pay more then you owe");
+		}
+		
+		this.totalFines -=payment;
 	}
 
 	@Override

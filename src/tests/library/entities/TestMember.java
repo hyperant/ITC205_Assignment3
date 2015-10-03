@@ -191,12 +191,35 @@ public class TestMember {
 		this.member.addFine(-1);
 	}
 
-	/*
 	@Test
 	public void testPayFine() {
-		fail("Not yet implemented");
+		//Setup
+		this.member.addFine(5);
+		this.member.payFine(2.5f);
+		
+		//Assert
+		assertEquals(2.5f, this.member.getFineAmount(), 0.0f);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testPayFineLessThenZero() {
+		this.member.payFine(-5f);
+		
+		//Assert, make sure fine hasnt changed
+		assertEquals(0f, this.member.getFineAmount(), 0.0f);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testPayFineMoreThenOwing() {
+		//Setup
+		this.member.addFine(5f);
+		this.member.payFine(10f);
+		
+		//Assert, make sure fine hasnt changed
+		assertEquals(5f, this.member.getFineAmount(), 0.0f);
 	}
 
+	/*
 	@Test
 	public void testAddLoan() {
 		fail("Not yet implemented");
