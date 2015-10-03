@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import library.entities.Book;
 import library.entities.Member;
+import library.interfaces.entities.EMemberState;
 import library.interfaces.entities.IBook;
 import library.interfaces.entities.ILoan;
 import library.interfaces.entities.IMember;
@@ -285,12 +286,12 @@ public class TestMember {
 		this.member.removeLoan(mock(ILoan.class));
 	}
 
-	/*
 	@Test
 	public void testGetState() {
-		fail("Not yet implemented");
+		assertEquals(EMemberState.BORROWING_ALLOWED, this.member.getState());
 	}
 
+	/*
 	@Test
 	public void testGetFirstName() {
 		fail("Not yet implemented");

@@ -148,8 +148,7 @@ public class Member implements IMember {
 
 	@Override
 	public EMemberState getState() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.memberState;
 	}
 
 	@Override
