@@ -93,7 +93,9 @@ public class Member implements IMember {
 			throw new IllegalArgumentException("Bad parameter: fine must be greater then or equal to 0");
 		}
 		
-		this.totalFines +=fine;		
+		this.totalFines +=fine;
+		
+		this.updateLoanState();
 	}
 
 	@Override
@@ -107,24 +109,35 @@ public class Member implements IMember {
 		}
 		
 		this.totalFines -=payment;
+		
+		this.updateLoanState();
 	}
 
 	@Override
 	public void addLoan(ILoan loan) {
-		//To do exceptions...
+		if(loan ==null) {
+			throw new IllegalArgumentException("Bad parameter: loan can not be null");
+		}
+		
+		if(this.memberState ==EMemberState.BORROWING_DISALLOWED) {
+			throw new IllegalArgumentException("Member is not allowed to borrow");
+		}
+		
 		this.loanList.add(loan);
+		this.updateLoanState();
 	}
 
 	@Override
 	public List<ILoan> getLoans() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.loanList;
 	}
 
 	@Override
 	public void removeLoan(ILoan loan) {
 		// TODO Auto-generated method stub
 		
+		this.updateLoanState();
 	}
 
 	@Override
@@ -161,6 +174,14 @@ public class Member implements IMember {
 	public int getID() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	private void updateLoanState() {
+		if (this.hasReachedLoanLimit() || this.hasReachedFineLimit() || this.hasOverDueLoans()) {
+			this.memberState =EMemberState.BORROWING_DISALLOWED;
+		} else {
+			this.memberState =EMemberState.BORROWING_ALLOWED;
+		}
 	}
 
 }
