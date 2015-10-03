@@ -291,30 +291,28 @@ public class TestMember {
 		assertEquals(EMemberState.BORROWING_ALLOWED, this.member.getState());
 	}
 
-	/*
 	@Test
 	public void testGetFirstName() {
-		fail("Not yet implemented");
+		assertEquals(this.firstName, this.member.getFirstName());
 	}
 
 	@Test
 	public void testGetLastName() {
-		fail("Not yet implemented");
+		assertEquals(this.lastName, this.member.getLastName());
 	}
 
 	@Test
 	public void testGetContactPhone() {
-		fail("Not yet implemented");
+		assertEquals(this.contactPhone, this.member.getContactPhone());
 	}
 
 	@Test
 	public void testGetEmailAddress() {
-		fail("Not yet implemented");
+		assertEquals(this.emailAddress, this.member.getEmailAddress());
 	}
 
 	@Test
 	public void testGetID() {
-		fail("Not yet implemented");
+		assertEquals(this.memberID, this.member.getID());
 	}
-*/
 }
