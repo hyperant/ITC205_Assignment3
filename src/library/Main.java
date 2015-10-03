@@ -1,5 +1,7 @@
 package library;
 
+import library.daos.BookDAO;
+import library.daos.BookHelper;
 import library.hardware.CardReader;
 import library.hardware.Display;
 import library.hardware.Printer;
@@ -35,6 +37,8 @@ public class Main implements IMainListener {
 		scanner = new Scanner();
 		printer = new Printer();
 		display = new Display();
+
+		//this.bookDAO =new BookDAO(new BookHelper());
 		
 		//setupTestData();
 	}
