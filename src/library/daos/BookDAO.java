@@ -28,8 +28,10 @@ public class BookDAO implements IBookDAO {
 
 	@Override
 	public IBook addBook(String author, String title, String callNo) {
-		// TODO Auto-generated method stub
-		return null;
+		int bookID =++this.nextBookID;
+		IBook book =this.bookhelper.makeBook(author, title, callNo, bookID);
+		this.bookMap.put(bookID, book);
+		return book;
 	}
 
 	@Override
