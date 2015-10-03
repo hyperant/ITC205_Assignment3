@@ -2,6 +2,9 @@ package tests.library.daos;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+
+import java.util.List;
+
 import library.daos.BookDAO;
 import library.daos.LoanDAO;
 import library.interfaces.daos.IBookDAO;
@@ -101,12 +104,24 @@ public class TestBookDAO {
 		assertEquals(bookByID, null);
 	}
 
-	/*
 	@Test
 	public void testListBooks() {
-		fail("Not yet implemented");
+		//Setup
+		IBook mockBook =mock(IBook.class);
+		when(this.helper.makeBook(eq(this.author), eq(this.title), eq(this.callNumber), eq(this.bookID))).thenReturn(mockBook);
+		
+		//Execute
+		IBook book =this.bookDAO.addBook(this.author, this.title, this.callNumber);
+		
+		//Verify and assert
+		verify(this.helper).makeBook(eq(this.author), eq(this.title), eq(this.callNumber), eq(this.bookID));
+		assertEquals(book, mockBook);
+		
+		//Actual Test to make sure we do not get the book
+		List<IBook> bookList =this.bookDAO.listBooks();
+		assertEquals(1, bookList.size());
 	}
-
+/*
 	@Test
 	public void testFindBooksByAuthor() {
 		fail("Not yet implemented");
