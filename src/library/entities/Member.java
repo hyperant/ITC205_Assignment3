@@ -134,8 +134,15 @@ public class Member implements IMember {
 
 	@Override
 	public void removeLoan(ILoan loan) {
-		// TODO Auto-generated method stub
+		if(loan ==null) {
+			throw new IllegalArgumentException("Bad parameter: loan can not be null");
+		}
 		
+		if(!this.loanList.contains(loan)) {
+			throw new IllegalArgumentException("Loan does not exist");
+		}
+		
+		this.loanList.remove(loan);
 		this.updateLoanState();
 	}
 

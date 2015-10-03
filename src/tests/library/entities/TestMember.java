@@ -252,12 +252,40 @@ public class TestMember {
 		assertEquals(1, this.member.getLoans().size());
 	}
 
-	/*
 	@Test
 	public void testRemoveLoan() {
-		fail("Not yet implemented");
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		this.member.addLoan(loan);
+		
+		//Execute test
+		this.member.removeLoan(loan);
+		
+		//Assert
+		assertEquals(0, this.member.getLoans().size());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testRemoveLoanBadParamLoanNull() {
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		this.member.addLoan(loan);
+		
+		//Execute test
+		this.member.removeLoan(null);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testRemoveLoanLoanDoesnExist() {
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		this.member.addLoan(loan);
+		
+		//Execute test
+		this.member.removeLoan(mock(ILoan.class));
 	}
 
+	/*
 	@Test
 	public void testGetState() {
 		fail("Not yet implemented");
