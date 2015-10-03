@@ -1,9 +1,11 @@
 package tests.library.entities;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import library.entities.Book;
 import library.entities.Member;
 import library.interfaces.entities.IBook;
+import library.interfaces.entities.ILoan;
 import library.interfaces.entities.IMember;
 
 import org.junit.After;
@@ -88,12 +90,33 @@ public class TestMember {
 		IMember member =new Member(this.firstName, this.lastName, this.contactPhone, "", this.memberID);
 	}
 	
-	/*
 	@Test
 	public void testHasOverDueLoans() {
-		fail("Not yet implemented");
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		when(loan.isOverDue()).thenReturn(true);
+		this.member.addLoan(loan);
+		
+		//Verify and assert
+		boolean overDue =this.member.hasOverDueLoans();
+		verify(loan).isOverDue();
+		assertTrue(overDue);
+	}
+	
+	@Test
+	public void testHasOverDueLoansNoneOverDue() {
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		when(loan.isOverDue()).thenReturn(false);
+		this.member.addLoan(loan);
+		
+		//Verify and assert
+		boolean overDue =this.member.hasOverDueLoans();
+		verify(loan).isOverDue();
+		assertFalse(overDue);
 	}
 
+	/*
 	@Test
 	public void testHasReachedLoanLimit() {
 		fail("Not yet implemented");

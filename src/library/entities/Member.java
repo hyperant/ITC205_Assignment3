@@ -47,7 +47,11 @@ public class Member implements IMember {
 
 	@Override
 	public boolean hasOverDueLoans() {
-		// TODO Auto-generated method stub
+		for(ILoan loan : this.loanList) {
+			if(loan.isOverDue()) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -89,8 +93,8 @@ public class Member implements IMember {
 
 	@Override
 	public void addLoan(ILoan loan) {
-		// TODO Auto-generated method stub
-		
+		//To do exceptions...
+		this.loanList.add(loan);
 	}
 
 	@Override
