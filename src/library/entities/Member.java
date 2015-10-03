@@ -57,7 +57,10 @@ public class Member implements IMember {
 
 	@Override
 	public boolean hasReachedLoanLimit() {
-		// TODO Auto-generated method stub
+		if(this.loanList.size() >=LOAN_LIMIT) {
+			return true;
+		}
+		
 		return false;
 	}
 

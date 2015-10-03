@@ -116,12 +116,29 @@ public class TestMember {
 		assertFalse(overDue);
 	}
 
-	/*
 	@Test
 	public void testHasReachedLoanLimit() {
-		fail("Not yet implemented");
+		//Setup
+		for(int i =0; i <10; i++) {
+			ILoan loan =mock(ILoan.class);
+			this.member.addLoan(loan);
+		}
+
+		//Assert
+		assertTrue(this.member.hasReachedLoanLimit());
+	}
+	
+	@Test
+	public void testHasReachedLoanLimitStillCanBorrow() {
+		//Setup
+		ILoan loan =mock(ILoan.class);
+		this.member.addLoan(loan);
+
+		//Assert
+		assertFalse(this.member.hasReachedLoanLimit());
 	}
 
+	/*
 	@Test
 	public void testHasFinesPayable() {
 		fail("Not yet implemented");
