@@ -36,7 +36,10 @@ public class BookDAO implements IBookDAO {
 
 	@Override
 	public IBook getBookByID(int id) {
-		// TODO Auto-generated method stub
+		if(this.bookMap.containsKey((Integer)id)) {
+			return this.bookMap.get((Integer)id);
+		}
+		
 		return null;
 	}
 
