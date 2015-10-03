@@ -66,8 +66,11 @@ public class Member implements IMember {
 
 	@Override
 	public boolean hasFinesPayable() {
-		// TODO Auto-generated method stub
-		return false;
+		if(this.totalFines >0) {
+			return true;
+		}
+		
+	return false;
 	}
 
 	@Override
@@ -84,7 +87,8 @@ public class Member implements IMember {
 
 	@Override
 	public void addFine(float fine) {
-		// TODO Auto-generated method stub
+		//need to add exceptions
+		this.totalFines +=fine;
 		
 	}
 

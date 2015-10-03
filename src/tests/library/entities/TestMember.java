@@ -138,12 +138,23 @@ public class TestMember {
 		assertFalse(this.member.hasReachedLoanLimit());
 	}
 
-	/*
 	@Test
 	public void testHasFinesPayable() {
-		fail("Not yet implemented");
+		//Setup
+		this.member.addFine(1.2f);
+		
+		//Assert
+		assertTrue(this.member.hasFinesPayable());
+	}
+	
+	@Test
+	public void testHasFinesPayableNone() {
+		
+		//Assert
+		assertFalse(this.member.hasFinesPayable());
 	}
 
+	/*
 	@Test
 	public void testHasReachedFineLimit() {
 		fail("Not yet implemented");
