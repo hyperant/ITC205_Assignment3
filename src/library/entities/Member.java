@@ -89,9 +89,11 @@ public class Member implements IMember {
 
 	@Override
 	public void addFine(float fine) {
-		//need to add exceptions
-		this.totalFines +=fine;
+		if(fine <0) {
+			throw new IllegalArgumentException("Bad parameter: fine must be greater then or equal to 0");
+		}
 		
+		this.totalFines +=fine;		
 	}
 
 	@Override

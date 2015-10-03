@@ -177,12 +177,21 @@ public class TestMember {
 		assertEquals(5.50f, this.member.getFineAmount(), 0.0f);
 	}
 
-	/*
 	@Test
 	public void testAddFine() {
-		fail("Not yet implemented");
+		//Setup
+		this.member.addFine(1);
+		
+		//Assert
+		assertEquals(1f, this.member.getFineAmount(), 0.0f);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testAddFineLessThenZero() {
+		this.member.addFine(-1);
 	}
 
+	/*
 	@Test
 	public void testPayFine() {
 		fail("Not yet implemented");
