@@ -1,11 +1,30 @@
 package library.daos;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import library.interfaces.daos.IBookDAO;
+import library.interfaces.daos.IBookHelper;
 import library.interfaces.entities.IBook;
+import library.interfaces.entities.ILoan;
 
 public class BookDAO implements IBookDAO {
+	private IBookHelper bookhelper;
+	
+	private int nextBookID;
+	
+	private Map<Integer, IBook> bookMap;
+	
+	public BookDAO(IBookHelper bookHelper) {
+		if(bookHelper ==null) {
+			throw new IllegalArgumentException("Bad parameter: bookHelper can not be null");
+		}
+		
+		this.bookhelper =bookHelper;
+		this.nextBookID =0;
+		this.bookMap =new HashMap<Integer, IBook>();
+	}
 
 	@Override
 	public IBook addBook(String author, String title, String callNo) {
