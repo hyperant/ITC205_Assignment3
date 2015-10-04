@@ -206,10 +206,89 @@ public class TestMemberDAO {
 		assertEquals(0, memberList.size());
 	}
 
-	/*
 	@Test
 	public void testFindMembersByNames() {
-		fail("Not yet implemented");
+		//Setup
+		IMember mockMember =mock(IMember.class);
+		when(this.helper.makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID))).thenReturn(mockMember);
+		when(mockMember.getLastName()).thenReturn(this.lastName);
+		when(mockMember.getFirstName()).thenReturn(this.firstName);
+		
+		//Execute
+		IMember member =this.memberDAO.addMember(this.firstName, this.lastName, this.contactPhone, this.emailAddress);
+		
+		//Verify and assert
+		verify(this.helper).makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID));
+		assertEquals(mockMember, member);
+		
+		//Actual test
+		List<IMember> memberList =this.memberDAO.findMembersByNames(this.firstName, this.lastName);
+		verify(mockMember).getFirstName();
+		verify(mockMember).getLastName();
+		assertEquals(1, memberList.size());
 	}
-*/
+	
+	@Test
+	public void testFindMembersByNamesFirstNameDoesntMatch() {
+		//Setup
+		IMember mockMember =mock(IMember.class);
+		when(this.helper.makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID))).thenReturn(mockMember);
+		when(mockMember.getLastName()).thenReturn(this.lastName);
+		when(mockMember.getFirstName()).thenReturn(this.firstName);
+		
+		//Execute
+		IMember member =this.memberDAO.addMember(this.firstName, this.lastName, this.contactPhone, this.emailAddress);
+		
+		//Verify and assert
+		verify(this.helper).makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID));
+		assertEquals(mockMember, member);
+		
+		//Actual test
+		List<IMember> memberList =this.memberDAO.findMembersByNames("i do not exist", this.lastName);
+		verify(mockMember).getFirstName();
+		assertEquals(0, memberList.size());
+	}
+	
+	@Test
+	public void testFindMembersByNamesLastNameDoesNotMatch() {
+		//Setup
+		IMember mockMember =mock(IMember.class);
+		when(this.helper.makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID))).thenReturn(mockMember);
+		when(mockMember.getLastName()).thenReturn(this.lastName);
+		when(mockMember.getFirstName()).thenReturn(this.firstName);
+		
+		//Execute
+		IMember member =this.memberDAO.addMember(this.firstName, this.lastName, this.contactPhone, this.emailAddress);
+		
+		//Verify and assert
+		verify(this.helper).makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID));
+		assertEquals(mockMember, member);
+		
+		//Actual test
+		List<IMember> memberList =this.memberDAO.findMembersByNames(this.firstName, "i do not exist");
+		verify(mockMember).getFirstName();
+		verify(mockMember).getLastName();
+		assertEquals(0, memberList.size());
+	}
+	
+	@Test
+	public void testFindMembersByNamesFirstNameAndLastNameDoNotMatch() {
+		//Setup
+		IMember mockMember =mock(IMember.class);
+		when(this.helper.makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID))).thenReturn(mockMember);
+		when(mockMember.getLastName()).thenReturn(this.lastName);
+		when(mockMember.getFirstName()).thenReturn(this.firstName);
+		
+		//Execute
+		IMember member =this.memberDAO.addMember(this.firstName, this.lastName, this.contactPhone, this.emailAddress);
+		
+		//Verify and assert
+		verify(this.helper).makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID));
+		assertEquals(mockMember, member);
+		
+		//Actual test
+		List<IMember> memberList =this.memberDAO.findMembersByNames("i do not exist", "i do not exist");
+		verify(mockMember).getFirstName();
+		assertEquals(0, memberList.size());
+	}
 }
