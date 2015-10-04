@@ -36,7 +36,10 @@ public class MemberDAO implements IMemberDAO {
 
 	@Override
 	public IMember getMemberByID(int id) {
-		// TODO Auto-generated method stub
+		if(this.memberMap.containsKey(id)) {
+			return this.memberMap.get(id);
+		}
+		
 		return null;
 	}
 

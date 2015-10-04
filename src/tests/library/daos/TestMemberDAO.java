@@ -7,6 +7,7 @@ import library.daos.MemberDAO;
 import library.interfaces.daos.IBookDAO;
 import library.interfaces.daos.IMemberDAO;
 import library.interfaces.daos.IMemberHelper;
+import library.interfaces.entities.IBook;
 import library.interfaces.entities.IMember;
 
 import org.junit.After;
@@ -19,6 +20,7 @@ public class TestMemberDAO {
 	private String lastName;
 	private String contactPhone;
 	private String emailAddress;
+	private int memberID;
 	
 	private IMemberHelper helper;
 	private IMemberDAO memberDAO;
@@ -29,6 +31,7 @@ public class TestMemberDAO {
 		this.lastName ="Fletcher";
 		this.contactPhone ="666666";
 		this.emailAddress ="no@no.com";
+		this.memberID =1;
 		
 		this.helper =mock(IMemberHelper.class);
 		this.memberDAO =new MemberDAO(this.helper);
@@ -65,12 +68,44 @@ public class TestMemberDAO {
 		assertEquals(mockMember, member);
 	}
 
-	/*
 	@Test
 	public void testGetMemberByID() {
-		fail("Not yet implemented");
+		//Setup
+		IMember mockMember =mock(IMember.class);
+		when(this.helper.makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID))).thenReturn(mockMember);
+
+		//Execute
+		IMember member =this.memberDAO.addMember(this.firstName, this.lastName, this.contactPhone, this.emailAddress);
+		
+		//Verify and assert
+		verify(this.helper).makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID));
+		assertEquals(mockMember, member);
+		
+		//Actual Test to make sure we can get the book by ID
+		IMember memberByID =this.memberDAO.getMemberByID(this.memberID);
+		assertTrue(memberByID instanceof IMember);
+		assertEquals(member, memberByID);
+	}
+	
+	@Test
+	public void testGetMemberByIDNotExist() {
+		//Setup
+		IMember mockMember =mock(IMember.class);
+		when(this.helper.makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID))).thenReturn(mockMember);
+
+		//Execute
+		IMember member =this.memberDAO.addMember(this.firstName, this.lastName, this.contactPhone, this.emailAddress);
+		
+		//Verify and assert
+		verify(this.helper).makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID));
+		assertEquals(mockMember, member);
+		
+		//Actual Test to make sure we can get the book by ID
+		IMember memberByID =this.memberDAO.getMemberByID(10);
+		assertEquals(null, memberByID);
 	}
 
+	/*
 	@Test
 	public void testListMembers() {
 		fail("Not yet implemented");
