@@ -1,5 +1,6 @@
 package library.daos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +46,7 @@ public class MemberDAO implements IMemberDAO {
 
 	@Override
 	public List<IMember> listMembers() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<IMember>(this.memberMap.values());
 	}
 
 	@Override

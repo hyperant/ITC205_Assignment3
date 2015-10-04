@@ -2,6 +2,9 @@ package tests.library.daos;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+
+import java.util.List;
+
 import library.daos.BookDAO;
 import library.daos.MemberDAO;
 import library.interfaces.daos.IBookDAO;
@@ -105,12 +108,25 @@ public class TestMemberDAO {
 		assertEquals(null, memberByID);
 	}
 
-	/*
 	@Test
 	public void testListMembers() {
-		fail("Not yet implemented");
+		//Setup
+		IMember mockMember =mock(IMember.class);
+		when(this.helper.makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID))).thenReturn(mockMember);
+
+		//Execute
+		IMember member =this.memberDAO.addMember(this.firstName, this.lastName, this.contactPhone, this.emailAddress);
+		
+		//Verify and assert
+		verify(this.helper).makeMember(eq(this.firstName), eq(this.lastName), eq(this.contactPhone), eq(this.emailAddress), eq(this.memberID));
+		assertEquals(mockMember, member);
+		
+		//Actual Test to make sure we do not get the book
+		List<IMember> memberList =this.memberDAO.listMembers();
+		assertEquals(1, memberList.size());
 	}
 
+	/*
 	@Test
 	public void testFindMembersByLastName() {
 		fail("Not yet implemented");
