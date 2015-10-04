@@ -26,10 +26,12 @@ public class MemberDAO implements IMemberDAO {
 	}
 
 	@Override
-	public IMember addMember(String firstName, String lastName,
-			String ContactPhone, String emailAddress) {
-		// TODO Auto-generated method stub
-		return null;
+	public IMember addMember(String firstName, String lastName, String contactPhone, String emailAddress) {
+		int memberID =++this.nextMemberID;
+		IMember member =this.memberHelper.makeMember(firstName, lastName, contactPhone, emailAddress, memberID);
+		this.memberMap.put(memberID, member);
+		
+		return member;
 	}
 
 	@Override
