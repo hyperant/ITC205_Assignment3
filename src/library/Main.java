@@ -2,6 +2,10 @@ package library;
 
 import library.daos.BookDAO;
 import library.daos.BookHelper;
+import library.daos.LoanDAO;
+import library.daos.LoanHelper;
+import library.daos.MemberDAO;
+import library.daos.MemberHelper;
 import library.hardware.CardReader;
 import library.hardware.Display;
 import library.hardware.Printer;
@@ -38,9 +42,11 @@ public class Main implements IMainListener {
 		printer = new Printer();
 		display = new Display();
 
-		//this.bookDAO =new BookDAO(new BookHelper());
+		this.bookDAO =new BookDAO(new BookHelper());
+		this.loanDAO =new LoanDAO(new LoanHelper());
+		this.memberDAO =new MemberDAO(new MemberHelper());
 		
-		//setupTestData();
+		setupTestData();
 	}
 
 
